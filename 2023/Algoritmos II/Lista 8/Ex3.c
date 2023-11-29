@@ -61,8 +61,16 @@ int main()
 
     printf("Quantidade de números em x3: %d\n", *qtd);
     printf("x3: {");
-    for (int i = 0; i < 7; i++)
-    {
-        }
+    // for (int i = 0; i < *qtd; i++)
+    // {
+    //     printf("%d", x3[i]);
+    // }
     printf("}");
 }
+
+/*
+ Coloquei o loop for em comentário porque ao adicioná-lo, tenho erro de segmentação (segfault).
+ Isso acontece mesmo quando o for está vazio, sem nenhuma linha de código. Sem ele, tudo funciona normalmente,
+ e consigo printar todos os elementos de x3 usando
+ printf("%d", x3[i])
+ */

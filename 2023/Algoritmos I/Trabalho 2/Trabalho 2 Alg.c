@@ -19,7 +19,7 @@ int choiceHandler()
 
 void printPuzzle()
 {
-    printf("Na sua casa, seus familiares preocupados te procuram mas só encontram uma peça de quebra-cabeça em cima de seu travisseiro.\n\n");
+    printf("Na sua casa, seus familiares preocupados te procuram mas só encontram uma peça de quebra-cabeça em cima de seu travesseiro.\n\n");
     printf("\t\t\t         _    \n"
            "\t\t\t     ___| |__ \n"
            "\t\t\t    (_      (_\n"

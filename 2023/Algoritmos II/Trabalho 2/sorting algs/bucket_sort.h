@@ -1,18 +1,19 @@
 
 #define BUCKET_SIZE 500
 #define BUCKETS 10
-#define MAX = 500;
+#define MAX 50
 
+struct timeval start, stop;
 typedef struct
 {
     int head;
     int bucket[BUCKET_SIZE];
 } bucket;
 
-void bucket_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
+void bucket_sort(int vet[], int n, int *comps, int *trocas, double *secs)
 {
 
-    clock_t start_t = clock();
+    gettimeofday(&start, NULL);
     bucket b[BUCKETS];
     for (int i = 0; i < BUCKETS; i++)
     {
@@ -25,7 +26,7 @@ void bucket_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
         while (j >= 0)
         {
             (*comps)++;
-            if (vet[i] >= j * BUCKET_SIZE)
+            if (vet[i] >= j * MAX)
             {
                 b[j].bucket[b[j].head] = vet[i];
                 (b[j].head)++;
@@ -37,19 +38,21 @@ void bucket_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
 
     for (int i = 0; i < BUCKETS; i++)
         if (b[i].head)
-            bubble_sort(b[i].bucket, b[i].head, comps, trocas, clocks);
+            bubble_sort(b[i].bucket, b[i].head, comps, trocas, secs);
 
     int i = 0;
-    for (int j = 0; j < BUCKETS; j++)
+    while (i < n)
     {
-        for (int k = 0; k < b[j].head; k++)
+        for (int j = 0; j < BUCKETS; j++)
         {
-            (*trocas)++;
-            vet[i] = b[j].bucket[k];
-            i++;
+            for (int k = 0; k < b[j].head; k++)
+            {
+                (*trocas)++;
+                vet[i] = b[j].bucket[k];
+                i++;
+            }
         }
     }
-
-    clock_t end_t = clock();
-    (*clocks) = end_t - start_t;
+    gettimeofday(&stop, NULL);
+    (*secs) = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
 }

@@ -1,6 +1,8 @@
-void shell_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
+
+struct timeval start, stop;
+void shell_sort(int vet[], int n, int *comps, int *trocas, double *secs)
 {
-    clock_t start_t = clock();
+    gettimeofday(&start, NULL);
     int i, j, k, aux;
     for (k = n / 2; k > 0; k /= 2)
     {
@@ -18,7 +20,6 @@ void shell_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
             vet[j + k] = aux;
         }
     }
-
-    clock_t end_t = clock();
-    (*clocks) = end_t - start_t;
+    gettimeofday(&stop, NULL);
+    (*secs) = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
 }

@@ -1,7 +1,8 @@
 #include <time.h>
-void insertion_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
+struct timeval start, stop;
+void insertion_sort(int vet[], int n,int *comps, int *trocas, double *secs)
 {
-    clock_t start_t = clock();
+    gettimeofday(&start, NULL);
     int i, j, aux;
     for (i = 1; i < n; i++)
     {
@@ -16,7 +17,6 @@ void insertion_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
             (*comps)++;
         vet[j + 1] = aux;
     }
-
-    clock_t end_t = clock();
-    (*clocks) = end_t - start_t;
+    gettimeofday(&stop, NULL);
+    (*secs) = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
 }

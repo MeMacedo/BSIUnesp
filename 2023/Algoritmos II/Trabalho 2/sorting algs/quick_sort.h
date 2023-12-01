@@ -1,7 +1,9 @@
 #include "troca.h"
 #include <time.h>
 
-int partition(int v[], int left, int right, int *comps, int *trocas, int *clocks)
+struct timeval start, stop;
+
+int partition(int v[], int left, int right, int *comps, int *trocas, double *secs)
 
 {
     int pivot = v[left];
@@ -24,17 +26,16 @@ int partition(int v[], int left, int right, int *comps, int *trocas, int *clocks
     return i;
 }
 
-void quick_sort(int v[], int left, int right, int *comps, int *trocas, int *clocks)
+void quick_sort(int v[], int left, int right, int *comps, int *trocas, double *secs)
 
 {
-    clock_t start_t = clock();
+    gettimeofday(&start, NULL);
     if (left < right)
     {
-        int index_pivot = partition(v, left, right, comps, trocas, clocks);
-        quick_sort(v, left, index_pivot - 1, comps, trocas, clocks);
-        quick_sort(v, index_pivot + 1, right, comps, trocas, clocks);
+        int index_pivot = partition(v, left, right, comps, trocas, secs);
+        quick_sort(v, left, index_pivot - 1, comps, trocas, secs);
+        quick_sort(v, index_pivot + 1, right, comps, trocas, secs);
     }
-
-    clock_t end_t = clock();
-    (*clocks) = end_t - start_t;
+    gettimeofday(&stop, NULL);
+    (*secs) = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
 }

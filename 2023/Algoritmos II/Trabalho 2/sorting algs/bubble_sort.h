@@ -1,8 +1,9 @@
 #include <time.h>
 
-void bubble_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
+struct timeval start, stop;
+void bubble_sort(int vet[], int n, int *comps, int *trocas, double *secs)
 {
-    clock_t start_t = clock();
+    gettimeofday(&start, NULL);
     int i, j, houve_troca = 1;
     for (i = 0; i < n - 1 && houve_troca; i++)
     {
@@ -18,6 +19,6 @@ void bubble_sort(int vet[], int n, int *comps, int *trocas, int *clocks)
             }
         }
     }
-    clock_t end_t = clock();
-    (*clocks) = end_t - start_t;
+    gettimeofday(&stop, NULL);
+    (*secs) = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
 }

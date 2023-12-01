@@ -1,7 +1,9 @@
 
 
 #include <time.h>
-void merge(int v[], int left, int middle, int right, int *comps, int *trocas, int *clocks)
+
+struct timeval start, stop;
+void merge(int v[], int left, int middle, int right, int *comps, int *trocas, double *secs)
 {
     int helper[1000], i, j, k;
     for (int i = left; i <= right; i++)
@@ -46,16 +48,15 @@ void merge(int v[], int left, int middle, int right, int *comps, int *trocas, in
     }
 }
 
-void merge_sort(int v[], int left, int right, int *comps, int *trocas, int *clocks)
+void merge_sort(int v[], int left, int right, int *comps, int *trocas, double *secs)
 {
-    clock_t start_t = clock();
+    gettimeofday(&start, NULL);
     if (left >= right)
         return;
     int middle = (left + right) / 2;
-    merge_sort(v, left, middle, comps, trocas, clocks);
-    merge_sort(v, middle + 1, right, comps, trocas, clocks);
-    merge(v, left, middle, right, comps, trocas, clocks);
-
-    clock_t end_t = clock();
-    (*clocks) = end_t - start_t;
+    merge_sort(v, left, middle, comps, trocas, secs);
+    merge_sort(v, middle + 1, right, comps, trocas, secs);
+    merge(v, left, middle, right, comps, trocas, secs);
+    gettimeofday(&stop, NULL);
+    (*secs) = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
 }

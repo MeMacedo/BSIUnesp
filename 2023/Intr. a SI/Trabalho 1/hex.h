@@ -52,3 +52,13 @@ int charToInt(char num)
         return atoi(&num);
     }
 }
+
+int isHex(char num[10])
+{
+    for (int i = 0; i < strlen(num) - 1; i++)
+    {
+        if (!isdigit(num[i]) && tolower(num[i]) != 'a' && tolower(num[i]) != 'b' && tolower(num[i]) != 'c' && tolower(num[i]) != 'd' && tolower(num[i]) != 'e' && tolower(num[i]) != 'f')
+            return 0;
+    }
+    return 1;
+}

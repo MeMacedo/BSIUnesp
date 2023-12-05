@@ -35,3 +35,13 @@ void dec_to_bin(char num[10])
 
     strcpy(num, bin);
 }
+
+int isBin(char num[10])
+{
+    for (int i = 0; i < strlen(num) - 1; i++)
+    {
+        if (num[i] != '1' && num[i] != '0')
+            return 0;
+    }
+    return 1;
+}

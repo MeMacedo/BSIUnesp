@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 void oct_to_dec(char num[10])
 {
@@ -30,4 +32,14 @@ char dec_to_oct(char num[10])
     strrev(oct);
 
     strcpy(num, oct);
+}
+
+int isOct(char num[10])
+{
+    for (int i = 0; i < strlen(num) - 1; i++)
+    {
+        if (num[i] != '1' && num[i] != '0' && num[i] != '2' && num[i] != '3' && num[i] != '4' && num[i] != '5' && num[i] != '6' && num[i] != '7')
+            return 0;
+    }
+    return 1;
 }

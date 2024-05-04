@@ -1,0 +1,15 @@
+Faça uma busca na Internet sobre a utilização do ActionListener, KeyListener e MouseListener.
+Apresente um exemplo para cada um destes três tipos de listeners. Discuta onde cada um pode
+ser usado.
+
+
+R: Alguns componentes de interface possuem métodos especificos para adicionar listeners. 
+O ActionListener possue um único método que "ouve" cliques e possue um evento como parâmetro. 
+Esse evento pode ser usado para delimitar o que acontece quando o ActionListener percebe uma ação essa ação. 
+Um exemplo de sua implementação são os botões, que podem implementá-lo para perceber as ações de clique.
+
+O KeyListener é usado para perceber eventos como pressionamento, soltura etc, de teclas (uso do teclado). 
+Pode ser usado para disparar ações caso o enter seja pressionado, por exemplo.
+
+Já o MouseListener é usado para perceber ações do mouse, como quando passamos o cursor por cima de um quadro (o método a ser usado seria mouseEntered(e)) e ele se 
+ilumina dando a entender que é clicável. 

@@ -1,0 +1,15 @@
+Explique qual a diferença entre Listener e Adapter e quando usá-los.
+
+R: Adapter são implementações de classes enquanto Listeners são interfaces. Daí, o último te força a sobrescrever todos métodos atrelados a ele,
+enquanto o Adapter te deixa escolher apenas aqueles que te serão necessários. 
+O Adapter torna seu código mais simples e legível e é melhor usá-lo quando for utilizar apenas alguns dos métodos disponíveis. Para o Listener, 
+seu uso é mais adequado quando todo seu escopo for necessário, além de ser possível implementá-la direto da sua própria classe, como por exemplo:
+
+///É possível	
+public class MainWindow extends JFrame implements WindowListener {
+    ...
+}
+///Não é possível
+public class MainWindow extends JFrame, WindowAdapter {
+    ...
+}

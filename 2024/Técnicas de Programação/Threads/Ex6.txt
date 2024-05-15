@@ -1,0 +1,9 @@
+6. É possível substituir o “SwingUtilities.invokeLater” pelo método
+“SwingUtilities.invokeAndWait”? Apresente as alterações necessárias no programa. Qual a
+diferença entre estes métodos?
+
+
+
+
+O SwingUtilities.invokeAndWait, é usado para inserir o evento na thread e esperar sua execução terminar para seguir para proxima ação. Já o invokeLater insere o evento
+na thread e espera que seja executado quando der.

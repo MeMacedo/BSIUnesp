@@ -1,0 +1,8 @@
+1. Compare os dois programas nas transparências 5 e 8. Quais diferenças você identifica nos códigos
+entre estes programas? Explique estas diferenças.
+
+Na transparência 5, a classe Thread1 extende a classe Thread, fazendo o override do método run e na main é instanciada para criar um objeto a ser executado com o método start.
+As diferenças com a transparência 8, é que nela é usada a interface Runnable sendo implementada, fazendo ser obrigatório a implementação do método run e na main, criar uma instância
+da classe ThreadSimples dentro do construtor de uma Thread, para assim ser possível usar o método start, iniciando o método criado na ThreadSimples. 
+
+O uso da interface auxilia na reutilização do código por mais de uma thread, além de que facilita a herança de classes, já que só é possível extender de uma única.

@@ -129,21 +129,21 @@ class Ex3 extends JFrame {
             Object selected = box.getSelectedItem();
 
             if (selected == "Soma") {
-            texto3.setText(number1 + number2 + "");
+                texto3.setText(number1 + number2 + "");
             }
             if (selected == "Divide") {
 
-            texto3.setText(number1 / number2 + "");
+                texto3.setText(number1 / number2 + "");
             }
             if (selected == "Subtrai") {
 
-            texto3.setText(number1 - number2 + "");
+                texto3.setText(number1 - number2 + "");
             }
             if (selected == "Multiplica") {
 
-            texto3.setText(number1 * number2 + "");
+                texto3.setText(number1 * number2 + "");
             }
-            }
-        
+        }
+
     }
 }

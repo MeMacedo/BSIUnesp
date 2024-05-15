@@ -1,0 +1,5 @@
+5. Poderíamos executar “pBar.setValue(cont++);” da linha 31 sem usar o
+“SwingUtilities.invokeLater”? Explique.
+
+Não, pois aí a execução seria feita sem esperar o termino de todas as ações dentro da thread, assim só mostrando na interface quando a ação estivesse terminada
+e a progress bar estivesse completa.

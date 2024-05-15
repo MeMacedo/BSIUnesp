@@ -1,0 +1,5 @@
+4. A chamada do método “pBar.setValue(cont);” na linha 22, altera a representação gráfica da
+JProgressBar. Explique por que o esta chamada não precisa do método
+“SwingUtilities.invokeLater”.
+
+Ele não precisa pois ao fazer o setValue(cont), apenas uma ação é necessária, então sua ação é colocada na Thread de eventos do GUI, executada e terminada de uma vez.

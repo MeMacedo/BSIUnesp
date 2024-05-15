@@ -1,0 +1,7 @@
+Para responder às questões de 3 a 6, considere o arquivo TestaThread.java.
+
+3. Encontre o método “SwingUtilities.invokeLater”, por que ele é usado?
+
+No TestaThread.java ele não é usado, mas o invokeLater é um método que insere um evento de interface, que fica dentro da implementação de um Runnable e insere na
+Thread de eventos de interface do GUI para ser executado quando der. 
+Já o método presente no código, o SwingUtilities.invokeAndWait, é usado para inserir o evento na thread e esperar sua execução terminar.

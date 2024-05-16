@@ -221,49 +221,99 @@ def Cholesky(n, A, b):
   return SistemaTriangularSuperior(n, LTrans.tolist(), y)
 
 def GaussCompacto(n, A, b):
-  sol =[]
-  if calcMenores(n, A):
-    print()
-  else:
-    print("Menores principais não são diferentes de 0. Método não aplicável.")
+  matriz = np.array(A)
+  coefs = np.array(b)
+  matrizAument = np.concatenate(matriz, coefs.T, axis=1)
+  for i in range (n):
+    sum = 0
+    for j in range (n):
+      for k in range(i-1):
+            sum += matrizAument[i,k]*matrizAument[j,k]
+      if (i>j):
+        matrizAument[i,j] = (matriz[i,j]-sum)/matrizAument[j,j]
+      else:
+        matrizAument[i,j] = matriz[i,j]-sum
 
-  return sol
+  U = np.triu(matrizAument[:n,:n]).tolist()
+  newCoefs = matrizAument[:, n].tolist()
+
+  return SistemaTriangularSuperior(n, U, newCoefs)
 
 
 
 def Jacobi(n, A, b, x_0, e, max_int):
   sol =[0 for i in range(n)]
   ints = 0
-  
+  matriz = np.array(A)
+  x_k_1 = x_0
 
-  return sol, ints
+  if not (convLin(n,A) or convCol(n,A)):
+    print("Método não converge.")
+  else:
+
+    while(True):
+      ints+=1
+      x_k = x_k_1
+      x_k_1 = []
+      for i in range(n):
+        sum =0
+        for j in range(n):
+          sum+=x_k[j]*matriz[i,j]
+        calc = (b[i]-sum)/matriz[i,i]
+        x_k_1.append(calc)
+      erro = infNorm([x_k_1[i]-x_k[i] for i in range(n)])/infNorm(x_k_1)
+      if(erro<=e):
+        break
+      if(ints==max_int):
+        break
+
+  return x_k_1, ints
 
 def GaussSeidel(n, A, b, x_0, e, max_int):
-  sol =[0 for i in range(n)]
   ints = 0
-  
+  matriz = np.array(A)
+  x_k_1 = x_0
 
-  return sol, ints
+  if not (convLin(n,A) or sassenfeld(n,A)):
+    print("Método não converge.")
+  else:
+    while(True):
+      ints+=1
+      x_k = x_k_1
+      x_k_1 = []
+      for i in range(n):
+        sum=0
+        for j in range(n):
+          if(i>j):
+            sum+=x_k[j]*matriz[i,j]
+          if(i<j):
+            sum+=x_k_1[j]*matriz[i,j]
+        calc = (b[i]-sum)/matriz[i,i]
+        x_k_1.append(calc)
+      erro = infNorm([x_k_1[i]-x_k[i] for i in range(n)])/infNorm(x_k_1)
+      if(erro<=e):
+        break
+      if(ints==max_int):
+        break
 
+  return x_k_1, ints
 
 def MatrizInversa(n, A):
-  inv = []
-  match int(input("Digite 1 para resolver por Decomposição LU e 2 para Gauss Compacto: ")):
-    case 1:
-      print()
-    case 2:
-      print()
-    case _:
-      print("Opção inválida.")
-  
-  
-  
+  inv = np.zeros(n)
+  if not CalculoDeterminante(n,A):
+    print("Matriz não é singular. Não é possível achar inversa.")
 
-  return inv
-
-
-
-
+  else:
+    match int(input("Digite 1 para resolver por Decomposição LU e 2 para Gauss Compacto: ")):
+      case 1:
+        for i in range(n):
+          inv[:, i] = np.array(DecomposicaoLU(n, A, [int(i==j) for j in range(n)]))
+      case 2:
+        for i in range(n):
+          inv[:, i] = np.array(GaussCompacto(n, A, [int(i==j) for j in range(n)]))
+      case _:
+        print("Opção inválida.")
+  return inv.tolist()
 
 def calcMenores(n, A):
   matriz = np.array(A)
@@ -281,6 +331,43 @@ def calcDefinidaPositiva(n, A):
       return False
   return True
 
+def convLin(n, A):
+  coefs = []
+  for i in range (n):
+    sum = 0
+    for j in range(n):
+      if(i!=j):
+        sum+=abs(A[i][j]/A[i][i])
+    coefs.append(sum)
+
+  return max(coefs)<1
+
+def convCol(n, A):
+  coefs = []
+  for i in range (n):
+    sum = 0
+    for j in range(n):
+      if(i!=j):
+        sum+=abs(A[i][j]/A[j][j])
+    coefs.append(sum)
+
+  return max(coefs)<1
+
+def sassenfeld(n, A):
+  betas = []
+
+  for i in range(n):
+    for j in range(i-1):
+      sum+=  betas[j]*abs(A[i][j]/A[i][i])
+    for k in range(i+1, n):
+      sum+= abs(A[i][j]/A[i][i])
+    betas.append(sum)
+
+  return max(betas)<1
+
+
+def infNorm(vetor):
+    return max(abs(i) for i in vetor)
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,6 @@
 import numpy as np
 import math
 
-
 def main():
 
   print("----------MENU-----------")
@@ -16,54 +15,51 @@ def main():
   print("9 - Calcular gauss seidel")
   print("10 - Calcular inversa")
 
- 
-
   value = int(input("Digite a opção que queira calcular: "))
   
   match value:
     case 1:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
-      CalculoDeterminante(n, A)
+      print(f'O determinante é {CalculoDeterminante(n, A)}') 
     case 2:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
-      SistemaTriangularInferior(n, A, b)
+      print(f'A solução é : {SistemaTriangularInferior(n, A, b)}')
     case 3:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
-      SistemaTriangularInferior(n, A, b)
+      print(f'A solução é : {SistemaTriangularSuperior(n, A, b)}')
     case 4:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
-      DecomposicaoLU(n, A, b)
+      print(f'A solução é {DecomposicaoLU(n, A, b)}')
     case 5:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
-      Cholesky(n, A, b)
+      print(f'A solução é {Cholesky(n, A, b)}')
     case 6:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
-      GaussCompacto(n, A, b)
+      print(f'A solução é {GaussCompacto(n, A, b)}')
     case 7:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
-      GaussJordan(n, A, b)
+      print(f'A solução é {GaussJordan(n, A, b)}')
     case 8:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
       b = criaVetor(n, "de termos independentes")
       x_0 = criaVetor(n, "de solução inicial")
       e = float(input("Digite a precisão esperada: "))
-      
       max_int = int(input("Digite o máximo de iterações: "))
-      Jacobi(n, A, b, x_0, e, max_int)
+      print(f'A solução encontrada é {Jacobi(n, A, b, x_0, e, max_int)}')
     case 9:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
@@ -71,11 +67,13 @@ def main():
       x_0 = criaVetor(n, "de solução inicial")
       e = float(input("Digite a precisão esperada: "))
       max_int = int(input("Digite o máximo de iterações: "))
-      GaussSeidel(n, A, b, x_0, e, max_int)
+      print(f'A solução encontrada é {GaussSeidel(n, A, b, x_0, e, max_int)}')
     case 10:
       n = int(input("Digite a ordem da matriz: "))
       A = criaMatriz(n)
-      MatrizInversa(A)
+      typeSol = int(input("Digite 1 para resolver por Decomposição LU e 2 para Gauss Compacto: "))
+      print('A inversa é:')
+      print(MatrizInversa(n,A,typeSol))
     case _:
       print("Opção inválida.")
 
@@ -87,7 +85,10 @@ def criaMatriz(n):
     for j in range(n):
       A[i].append(float(input("Digite o próximo termo da matriz: ")))
 
+  print(np.array(A))
+
   return A
+
 
 def criaVetor(n, tipo):
   print(f'Criando vetor {tipo}.')
@@ -95,14 +96,15 @@ def criaVetor(n, tipo):
 
   for i in range(n):
     vetor.append(float(input("Digite o próximo termo do vetor: ")))
+  print(vetor)
   return vetor
 
 def CalculoDeterminante(n, A):
     matriz = np.array(A)
     if n==1:
-        return matriz[n,n]
+        return matriz[0,0]
     if n==2:
-        return A[0,0]*A[1,1]-A[0,1]*A[1,0]
+        return matriz[0,0]*matriz[1,1]-matriz[0,1]*matriz[1,0]
 
     det = 0
     
@@ -110,11 +112,8 @@ def CalculoDeterminante(n, A):
         if(A[0][j]) != 0:
             fator = (-1)**(2+j)
             cols = np.array([i!=j for i in range(n)])
-            print(matriz)
             subMatriz = matriz[np.ix_([1,n-1], cols)]
             det += fator*A[0][j]*CalculoDeterminante(n-1, subMatriz)
-            
-
 
     return det
 
@@ -160,15 +159,14 @@ def DecomposicaoLU(n, A, b):
             for k in np.arange(j+1,n):  
                 U[i,k] = U[i,k] - L[i,j]*U[j,k]  
             U[i,j] = 0
-    y = SistemaTriangularInferior(n, L.toList(), b)
-    sol = SistemaTriangularSuperior(n, U.toList(), y)
+    y = SistemaTriangularInferior(n, L.tolist(), b)
+    sol = SistemaTriangularSuperior(n, U.tolist(), y)
   else:
     print("Menores principais não são diferentes de 0. Método não aplicável.")
     
   return sol
 
 def GaussJordan(n, A, b):
-  sol =[]
   matriz = np.array(A)
   
   if calcMenores(n,A):
@@ -176,16 +174,15 @@ def GaussJordan(n, A, b):
       if (matriz[i,i] == 0):
         swap = 1
         while ((i + swap) < n and matriz[i+swap,i] == 0):
-          swap += 1
-          
+          swap += 1    
         temp = np.copy(matriz[i])
         matriz[i] = np.copy(matriz[i+swap])
         matriz[i+swap]= temp
-        fator = matriz[i,i]
-
-        for j in range(i+1,n):
-          matriz[j] = matriz[j] - ((matriz[j,i]/fator)*matriz[i])
-          b[j] = b[j]-(matriz[j,0]/fator)*b[i]
+        
+      fator = matriz[i,i]  
+      for j in range(i+1,n):
+        b[j] = b[j]-(matriz[j,i]/fator)*b[i]
+        matriz[j] = matriz[j] - ((matriz[j,i]/fator)*matriz[i])
   else:
     print("Menores principais não são diferentes de 0. Método não aplicável.")
     return []
@@ -193,9 +190,8 @@ def GaussJordan(n, A, b):
   return SistemaTriangularSuperior(n, matriz.tolist(), b)
 
 def Cholesky(n, A, b):
-  sol =[]
   matriz = np.array(A)
-  L = np.zeros(n)
+  L = np.zeros((n,n))
   transMatriz = matriz.transpose()
   if not np.array_equal(matriz, transMatriz):
     print('Matriz não é simétrica. Método inválido')
@@ -222,24 +218,26 @@ def Cholesky(n, A, b):
 
 def GaussCompacto(n, A, b):
   matriz = np.array(A)
-  coefs = np.array(b)
-  matrizAument = np.concatenate(matriz, coefs.T, axis=1)
+  coefs = np.array(b).reshape((n,1))
+  matrizAument = np.concatenate((matriz, coefs), axis=1)
+  matriz = np.copy(matrizAument)
   for i in range (n):
-    sum = 0
-    for j in range (n):
-      for k in range(i-1):
-            sum += matrizAument[i,k]*matrizAument[j,k]
+    for j in range (n+1):
+      sum = 0
       if (i>j):
+        for k in range(j):
+          sum += matrizAument[i,k]*matrizAument[k,j]
         matrizAument[i,j] = (matriz[i,j]-sum)/matrizAument[j,j]
       else:
+        for k in range(i):
+          sum += matrizAument[i,k]*matrizAument[k,j]
         matrizAument[i,j] = matriz[i,j]-sum
+  
 
   U = np.triu(matrizAument[:n,:n]).tolist()
   newCoefs = matrizAument[:, n].tolist()
 
   return SistemaTriangularSuperior(n, U, newCoefs)
-
-
 
 def Jacobi(n, A, b, x_0, e, max_int):
   sol =[0 for i in range(n)]
@@ -298,13 +296,13 @@ def GaussSeidel(n, A, b, x_0, e, max_int):
 
   return x_k_1, ints
 
-def MatrizInversa(n, A):
-  inv = np.zeros(n)
+def MatrizInversa(n, A, typeSol):
+  inv = np.zeros((n,n))
   if not CalculoDeterminante(n,A):
     print("Matriz não é singular. Não é possível achar inversa.")
 
   else:
-    match int(input("Digite 1 para resolver por Decomposição LU e 2 para Gauss Compacto: ")):
+    match typeSol:
       case 1:
         for i in range(n):
           inv[:, i] = np.array(DecomposicaoLU(n, A, [int(i==j) for j in range(n)]))
@@ -312,12 +310,12 @@ def MatrizInversa(n, A):
         for i in range(n):
           inv[:, i] = np.array(GaussCompacto(n, A, [int(i==j) for j in range(n)]))
       case _:
-        print("Opção inválida.")
+        print("Opção de solução inválida.")
   return inv.tolist()
 
 def calcMenores(n, A):
   matriz = np.array(A)
-  for i in range(n):
+  for i in range(1, n):
     det = CalculoDeterminante(i, matriz[0:i , 0:i].tolist())
     if det == 0:
       return False
@@ -325,7 +323,7 @@ def calcMenores(n, A):
 
 def calcDefinidaPositiva(n, A):
   matriz = np.array(A)
-  for i in range(n):
+  for i in range(1,n):
     det = CalculoDeterminante(i, matriz[0:i , 0:i].tolist())
     if det <= 0:
       return False

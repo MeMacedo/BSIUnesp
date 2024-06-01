@@ -1,0 +1,44 @@
+4. Usando as chaves {0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70} com função hashing (método da
+divisão inteira) e tabela de tamanho 17, como fica a tabela que possui tratamento de colisão
+pelo método:
+(a) Encadeamento exterior (utilizando listas dinâmicas para o tratamento das colisões)
+(b) Endereçamento aberto, tentativa linear
+
+
+a) 0 -> 0
+   1 -> 35
+   2 -> 70
+   3 
+   4 -> 21
+   5 -> 56
+   6
+   7 -> 7
+   8 -> 42
+   9
+   10
+   11 -> 28
+   12 -> 63
+   13
+   14 -> 14
+   15 -> 49
+   16
+   
+
+a) 0 -> 0
+   1 -> 35
+   2 -> 70
+   3 
+   4 -> 21
+   5 -> 56
+   6
+   7 -> 7
+   8 -> 42
+   9
+   10
+   11 -> 28
+   12 -> 63
+   13
+   14 -> 14
+   15 -> 49
+   16
+

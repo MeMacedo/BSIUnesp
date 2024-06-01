@@ -1,0 +1,14 @@
+3. Suponha um conjunto de chaves {0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70}. Quantas colisões
+seriam obtidas mediante a aplicação da função hashing (método da divisão inteira) para as
+seguintes tabelas
+(a) M = 7
+(b) M = 14
+(c) M = 17
+
+
+a) {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 9 colisões
+
+b) {0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0}, 8 colisões
+
+c) {0, 7, 14, 4, 11, 1, 8, 15, 5, 12, 2}, 0 colisões
+

@@ -1,0 +1,6 @@
+1. Em que situações podem ser utilizadas funções de hashing? Quais as características desejáveis de uma boa função de hashing?
+
+Funções de hashing são utilizadas para mapear dados para um valor de chave, transformando cada entrada num "valor de hash". Em estrutura de dados,
+a função de hash ajuda a criar listagens em "tabela" de forma a auxiliar na busca rápida do registro dos dados. 
+Uma boa função de hashing é injetora, não retornando um valor de hash igual para dois elementos diferentes. Como isso as vezes não
+é possível, tenta-se limitar a quantidade de vezes que isso ocorre..

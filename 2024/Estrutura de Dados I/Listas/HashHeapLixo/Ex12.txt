@@ -1,0 +1,20 @@
+12. Explique os algoritmos para coleta de lixo. Quais as vantagens e desvantagens de cada
+algoritmo?
+
+São 3 os métodos de coleta de lixo, o Marca-Varre, Referência Contável e o de Geração de Cópias.
+
+O método Marca-Varre se utiliza de um bit adicional que usado para sinalizar se um elemento é ou não lixo. Feito em duas etapas, precisa pausar
+a execução de todos os programas para iniciar. Na primeira etapa, varre todo o programa para identificar quais estruturas não são mais acessíveis
+pelo código marcando elas com 1 e as outras se mantem em 0. Na segunda etapa, percorre novamente o código excluindo aquelas com marcadas. Sua vantagem
+é que garante a exclusão de todos os lixos, mas custa tempo e pausa a execução do programa.
+
+Já o método de referência contável utiliza um inteiro contador de referência para cada estrutura existente no código. Para cada vez que a quantidade
+de referências duma estrutura aumenta ou diminiu, acontece o mesmo para esse contador. Quando ele zera, a porção de memória guardada por essa estrutura
+é liberada. Assim, custa menos tempo e não há trava na execução, porém o método não é capaz de excluir todos os lixos pois pode deixar passar uma lista
+circular (em que todos os elementos referenciam-se entre eles) ou perder a contagem de uma referencia caso haja mais referencias do que o inteiro possa
+computar (65535) 
+
+Por fim, o de algortimo de Geração de Cópias consiste me dividir a porção de memória disponível em dois, a parte ativa e a não-ativa. A porção ativa é usada
+normalmente até que seja toda preenchida. Após isso, toda a porção de memória acessível pelo atraves do código é copiada para a porção inativa e 
+a o que não, é excluído. Depois, a porção inativa fica ativa e vice-versa. Como desvantagens temos menor uso da quantidade de memória e a pausa no programa
+todo quando ele é executado. 

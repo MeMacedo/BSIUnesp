@@ -1,0 +1,2 @@
+2. Quais métodos podem ser utilizados para tratamento de colisões em tabelas hashing? Explique esses métodos.
+
